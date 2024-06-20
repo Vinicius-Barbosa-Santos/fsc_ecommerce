@@ -1,7 +1,15 @@
-import { Header } from "./components/Header"
+import { FunctionComponent } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-export const App = () => {
+// Pages
+import { HomePage } from './pages/Home'
+
+export const App: FunctionComponent = () => {
   return (
-    <Header />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
