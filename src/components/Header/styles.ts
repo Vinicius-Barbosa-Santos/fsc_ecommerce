@@ -25,6 +25,7 @@ export const HeaderItem = styled.div`
   font-weight: 600;
   font-size: 1rem;
   display: flex;
+  cursor: pointer;
   align-items: center;
 
   &:nth-child(1),
