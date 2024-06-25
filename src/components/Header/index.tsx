@@ -15,9 +15,13 @@ export const Header = () => {
         navigate('/login')
     }
 
+    const handleHomePage = () => {
+        navigate('/')
+    }
+
     return (
         <HeaderContainer>
-            <HeaderTitle>CLUB CLOTHING</HeaderTitle>
+            <HeaderTitle onClick={handleHomePage}>CLUB CLOTHING</HeaderTitle>
 
             <HeaderItems>
                 <HeaderItem>Explorar</HeaderItem>

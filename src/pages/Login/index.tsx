@@ -16,6 +16,7 @@ import {
     LoginInputContainer,
     LoginSubtitle
 } from './styles'
+import InputErrorMessage from '../../components/InputErrorMessage'
 
 export const LoginPage = () => {
 
@@ -29,8 +30,6 @@ export const LoginPage = () => {
     const handleSubmitPress = (data: any) => {
         console.log({ data })
     }
-
-    console.log({ errors })
 
     return (
         <>
@@ -58,6 +57,16 @@ export const LoginPage = () => {
                                 }
                             })}
                         />
+
+                        {errors?.email?.type === 'required' && (
+                            <InputErrorMessage>O e-mail é obrigatório.</InputErrorMessage>
+                        )}
+
+                        {errors?.email?.type === 'validate' && (
+                            <InputErrorMessage>
+                                Por favor, insira um e-mail válido.
+                            </InputErrorMessage>
+                        )}
                     </LoginInputContainer>
 
                     <LoginInputContainer>
@@ -68,6 +77,10 @@ export const LoginPage = () => {
                             type="password"
                             {...register('password', { required: true })}
                         />
+
+                        {errors?.password?.type === 'required' && (
+                            <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
+                        )}
                     </LoginInputContainer>
 
                     <CustomButton startIcon={<FiLogIn size={18} onClick={() => handleSubmit(handleSubmitPress)()} />}>Entrar</CustomButton>
