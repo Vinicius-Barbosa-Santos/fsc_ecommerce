@@ -17,11 +17,6 @@ export const CustomButtonContainer = styled.button`
   padding-left: 15px;
   font-weight: 600;
   transition: all 0.5s ease;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #000000;
-  }
 `;
 
 export const IconContainer = styled.div`
@@ -29,4 +24,9 @@ export const IconContainer = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #000000;
+  }
 `;

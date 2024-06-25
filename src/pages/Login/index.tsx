@@ -1,5 +1,7 @@
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
+import { useForm } from 'react-hook-form'
+import validator from 'validator'
 
 // Components
 import CustomButton from '../../components/CustomButton'
@@ -16,6 +18,20 @@ import {
 } from './styles'
 
 export const LoginPage = () => {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm()
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleSubmitPress = (data: any) => {
+        console.log({ data })
+    }
+
+    console.log({ errors })
+
     return (
         <>
             <Header />
@@ -32,15 +48,29 @@ export const LoginPage = () => {
 
                     <LoginInputContainer>
                         <p>E-mail</p>
-                        <CustomInput placeholder="Digite seu e-mail" />
+                        <CustomInput
+                            hasError={!!errors?.email}
+                            placeholder="Digite seu e-mail"
+                            {...register('email', {
+                                required: true,
+                                validate: (value) => {
+                                    return validator.isEmail(value)
+                                }
+                            })}
+                        />
                     </LoginInputContainer>
 
                     <LoginInputContainer>
                         <p>Senha</p>
-                        <CustomInput placeholder="Digite sua senha" />
+                        <CustomInput
+                            hasError={!!errors?.password}
+                            placeholder="Digite sua senha"
+                            type="password"
+                            {...register('password', { required: true })}
+                        />
                     </LoginInputContainer>
 
-                    <CustomButton startIcon={<FiLogIn size={18} />}>Entrar</CustomButton>
+                    <CustomButton startIcon={<FiLogIn size={18} onClick={() => handleSubmit(handleSubmitPress)()} />}>Entrar</CustomButton>
                 </LoginContent>
             </LoginContainer>
         </>
