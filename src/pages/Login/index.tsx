@@ -6,6 +6,7 @@ import validator from 'validator'
 // Components
 import CustomButton from '../../components/CustomButton'
 import CustomInput from '../../components/Custom-input'
+import InputErrorMessage from '../../components/InputErrorMessage'
 import { Header } from '../../components/Header'
 
 // Styles
@@ -16,7 +17,6 @@ import {
     LoginInputContainer,
     LoginSubtitle
 } from './styles'
-import InputErrorMessage from '../../components/InputErrorMessage'
 
 export const LoginPage = () => {
 
@@ -83,7 +83,7 @@ export const LoginPage = () => {
                         )}
                     </LoginInputContainer>
 
-                    <CustomButton startIcon={<FiLogIn size={18} onClick={() => handleSubmit(handleSubmitPress)()} />}>Entrar</CustomButton>
+                    <CustomButton onClick={() => handleSubmit(handleSubmitPress)()} startIcon={<FiLogIn size={18} />}>Entrar</CustomButton>
                 </LoginContent>
             </LoginContainer>
         </>
