@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import { getDocs, collection } from 'firebase/firestore'
 
 // Components
 import CategoryItem from "../Category-item"
@@ -8,8 +8,9 @@ import CategoryItem from "../Category-item"
 import { CategoriesContainer, CategoriesContent } from './styles'
 
 // Utilities
-import { Category } from "../../types/category.types"
-import { env } from "../../config/env.config"
+import Category from "../../types/category.types"
+import { db } from '../../config/firebase.config'
+import { categoryConverter } from '../../converters/firestore.converters'
 
 export const Categories = () => {
 
@@ -19,13 +20,22 @@ export const Categories = () => {
 
     const fetchCategories = async () => {
         try {
-            const { data } = await axios.get(`${env.apiUrl}/categories`)
+            const categoriesFromFirestore: Category[] = []
 
-            setCategories(data)
+            const querySnapshot = await getDocs(
+                collection(db, 'categories').withConverter(categoryConverter)
+            )
+
+            querySnapshot.forEach((doc) => {
+                categoriesFromFirestore.push(doc.data())
+            })
+
+            setCategories(categoriesFromFirestore)
         } catch (error) {
-            console.error(error)
+            console.log({ error })
         }
     }
+
 
     useEffect(() => {
         fetchCategories()
