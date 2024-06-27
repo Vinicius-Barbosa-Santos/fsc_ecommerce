@@ -18,16 +18,21 @@ import {
     LoginSubtitle
 } from './styles'
 
+interface LoginForm {
+    email: string
+    password: string
+}
+
 export const LoginPage = () => {
 
     const {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm()
+    } = useForm<LoginForm>()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleSubmitPress = (data: any) => {
+    const handleSubmitPress = (data: LoginForm) => {
         console.log({ data })
     }
 
