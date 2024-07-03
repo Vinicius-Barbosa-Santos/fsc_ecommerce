@@ -1,5 +1,5 @@
 // Utilities
-import { Category } from '../../types/category.types'
+import Category from '../../types/category.types.ts'
 
 // Styles
 import { CategoryItemContainer, CategoryName } from './styles.ts'
