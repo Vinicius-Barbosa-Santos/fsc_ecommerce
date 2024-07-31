@@ -6,8 +6,8 @@ import validator from 'validator'
 // Components
 import CustomButton from '../../components/CustomButton'
 import CustomInput from '../../components/Custom-input'
-import InputErrorMessage from '../../components/InputErrorMessage'
 import { Header } from '../../components/Header'
+import InputErrorMessage from '../../components/InputErrorMessage'
 
 // Styles
 import {
@@ -17,6 +17,13 @@ import {
     LoginInputContainer,
     LoginSubtitle
 } from './styles'
+
+import {
+    AuthError,
+    AuthErrorCodes,
+    signInWithEmailAndPassword
+} from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
 
 interface LoginForm {
     email: string
@@ -28,12 +35,32 @@ export const LoginPage = () => {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors }
     } = useForm<LoginForm>()
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleSubmitPress = (data: LoginForm) => {
-        console.log({ data })
+    const handleSubmitPress = async (data: LoginForm) => {
+        try {
+            const userCredentials = await signInWithEmailAndPassword(
+                auth,
+                data.email,
+                data.password
+            )
+
+            console.log({ userCredentials })
+        } catch (error) {
+            const _error = error as AuthError
+
+            if (_error.code === AuthErrorCodes.INVALID_PASSWORD) {
+                return setError('password', { type: 'mismatch' })
+            }
+
+            if (_error.code === AuthErrorCodes.USER_DELETED) {
+                return setError('email', { type: 'notFound' })
+            }
+
+            alert('E-mail ou Senha inválida!')
+        }
     }
 
     return (
@@ -67,6 +94,12 @@ export const LoginPage = () => {
                             <InputErrorMessage>O e-mail é obrigatório.</InputErrorMessage>
                         )}
 
+                        {errors?.email?.type === 'notFound' && (
+                            <InputErrorMessage>
+                                O e-mail não foi encontrado.
+                            </InputErrorMessage>
+                        )}
+
                         {errors?.email?.type === 'validate' && (
                             <InputErrorMessage>
                                 Por favor, insira um e-mail válido.
@@ -86,9 +119,17 @@ export const LoginPage = () => {
                         {errors?.password?.type === 'required' && (
                             <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
                         )}
+
+                        {errors?.password?.type === 'mismatch' && (
+                            <InputErrorMessage>A senha é inválida.</InputErrorMessage>
+                        )}
                     </LoginInputContainer>
 
-                    <CustomButton onClick={() => handleSubmit(handleSubmitPress)()} startIcon={<FiLogIn size={18} />}>Entrar</CustomButton>
+                    <CustomButton
+                        startIcon={<FiLogIn size={18} />}
+                        onClick={() => handleSubmit(handleSubmitPress)()}>
+                        Entrar
+                    </CustomButton>
                 </LoginContent>
             </LoginContainer>
         </>

@@ -16,8 +16,6 @@ export const Categories = () => {
 
     const [categories, setCategories] = useState<Category[]>([])
 
-    console.log(categories)
-
     const fetchCategories = async () => {
         try {
             const categoriesFromFirestore: Category[] = []
