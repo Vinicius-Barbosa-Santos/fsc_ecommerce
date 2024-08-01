@@ -8,10 +8,14 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../../config/firebase.config'
 import { signOut } from 'firebase/auth'
+import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
 
 export const Header = () => {
 
     const navigate = useNavigate()
+
+    const { isAuthenticated } = useContext(UserContext)
 
     const handleHomePage = () => {
         navigate('/')
@@ -21,7 +25,7 @@ export const Header = () => {
         navigate('/login')
     }
 
-    const handleSignUpPage = () => {
+    const handleSignUpClick = () => {
         navigate('/sign-up')
     }
 
@@ -31,8 +35,12 @@ export const Header = () => {
 
             <HeaderItems>
                 <HeaderItem onClick={handleHomePage}> Explorar</HeaderItem>
-                <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-                <HeaderItem onClick={handleSignUpPage}>Criar Conta</HeaderItem>
+                {!isAuthenticated && (
+                    <>
+                        <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
+                        <HeaderItem onClick={handleSignUpClick}>Criar Conta</HeaderItem>
+                    </>
+                )}
                 <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
                 <HeaderItem>
                     <BsCart3 size={25} />
