@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // Pages
 import { HomePage } from './pages/Home'
 import { LoginPage } from './pages/Login'
+import { Loading } from './components/Loading'
 import SignUpPage from './pages/SignUp'
 
 // Utilities
@@ -48,7 +49,7 @@ export const App: FunctionComponent = () => {
     return setIsInitializing(false)
   })
 
-  if (isInitializing) return null
+  if (isInitializing) return <Loading />
 
   return (
     <BrowserRouter>
