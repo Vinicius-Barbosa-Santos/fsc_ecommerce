@@ -31,7 +31,7 @@ export const Header = () => {
 
     return (
         <HeaderContainer>
-            <HeaderTitle>CLUB CLOTHING</HeaderTitle>
+            <HeaderTitle onClick={handleHomePage}>CLUB CLOTHING</HeaderTitle>
 
             <HeaderItems>
                 <HeaderItem onClick={handleHomePage}> Explorar</HeaderItem>
