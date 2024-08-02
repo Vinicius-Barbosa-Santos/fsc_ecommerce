@@ -20,6 +20,8 @@ import {
 
 // Utilities
 import { addDoc, collection } from 'firebase/firestore'
+import { useState } from 'react'
+import { Loading } from '../../components/Loading'
 
 interface SignUpForm {
     firstName: string,
@@ -38,23 +40,26 @@ const SignUpPage = () => {
         formState: { errors }
     } = useForm<SignUpForm>()
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const watchPassword = watch('password')
 
     const handleSubmitPress = async (data: SignUpForm) => {
         try {
+            setIsLoading(true)
+
             const userCredentials = await createUserWithEmailAndPassword(
                 auth,
                 data.email,
                 data.password
             )
 
-            console.log({ userCredentials })
-
             await addDoc(collection(db, 'users'), {
                 id: userCredentials.user.uid,
                 email: userCredentials.user.email,
                 firstName: data.firstName,
-                lastName: data.lastName
+                lastName: data.lastName,
+                provider: 'firebase'
             })
         } catch (error) {
             const _error = error as AuthError
@@ -62,12 +67,17 @@ const SignUpPage = () => {
             if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
                 return setError('email', { type: 'alreadyInUse' })
             }
+        } finally {
+            setIsLoading(false)
         }
     }
+
 
     return (
         <>
             <Header />
+
+            {isLoading && <Loading />}
 
             <SignUpContainer>
                 <SignUpContent>
