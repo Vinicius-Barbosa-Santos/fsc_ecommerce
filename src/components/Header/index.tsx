@@ -21,6 +21,10 @@ export const Header = () => {
         navigate('/')
     }
 
+    const handleExplorerPage = () => {
+        navigate('/explorer')
+    }
+
     const handleLoginClick = () => {
         navigate('/login')
     }
@@ -34,7 +38,7 @@ export const Header = () => {
             <HeaderTitle onClick={handleHomePage}>CLUB CLOTHING</HeaderTitle>
 
             <HeaderItems>
-                <HeaderItem onClick={handleHomePage}> Explorar</HeaderItem>
+                <HeaderItem onClick={handleExplorerPage}> Explorar</HeaderItem>
                 {!isAuthenticated && (
                     <>
                         <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
