@@ -15,9 +15,10 @@ import {
   CartTitle,
   CartTotal
 } from './styles'
+import CartItem from '../CartItem'
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, toggleCart } = useContext(CartContext)
+  const { isVisible, products, toggleCart } = useContext(CartContext)
 
   return (
     <CartContainer isVisible={isVisible}>
@@ -26,6 +27,9 @@ const Cart: FunctionComponent = () => {
         <CartTitle>Seu Carrinho</CartTitle>
 
         {/* produtos */}
+        {products.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))}
 
         <CartTotal>Total: R$999</CartTotal>
 
