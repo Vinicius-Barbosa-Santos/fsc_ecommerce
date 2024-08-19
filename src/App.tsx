@@ -15,6 +15,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import ExplorePage from './pages/Explore'
 import CategoryDetailsPage from './pages/CategoryDetails/lindex'
+import Cart from './components/Cart'
 
 export const App: FunctionComponent = () => {
 
@@ -62,6 +63,8 @@ export const App: FunctionComponent = () => {
         <Route path='/login' element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
+
+      <Cart />
     </BrowserRouter>
   )
 }
