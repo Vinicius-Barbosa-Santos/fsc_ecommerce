@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useMemo, useState } from 'react'
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
 import CartProduct from '../types/cart.types'
 import Product from '../types/product.types'
 
@@ -30,9 +30,21 @@ interface CartContextProviderProps {
     children: ReactNode
 }
 
+const ECOMMERCE_ITEMS_STORAGE_KEY = "ECOMMERCEDelivery:cartItems";
+
 const CartContextProvider = ({ children }: CartContextProviderProps) => {
     const [isVisible, setIsVisible] = useState(false)
-    const [products, setProducts] = useState<CartProduct[]>([])
+    const [products, setProducts] = useState<CartProduct[]>(() => {
+        const storedCartItems = localStorage.getItem(ECOMMERCE_ITEMS_STORAGE_KEY);
+        if (storedCartItems) {
+            return JSON.parse(storedCartItems);
+        }
+        return [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem(ECOMMERCE_ITEMS_STORAGE_KEY, JSON.stringify(products));
+      }, [products]);
 
     const productsTotalPrice = useMemo(() => {
         return products.reduce((acc, currentProduct) => {
