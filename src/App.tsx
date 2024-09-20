@@ -16,6 +16,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import ExplorePage from './pages/Explore'
 import CategoryDetailsPage from './pages/CategoryDetails/lindex'
 import Cart from './components/Cart'
+import CheckoutPage from './pages/Checkout'
 
 export const App: FunctionComponent = () => {
 
@@ -60,6 +61,7 @@ export const App: FunctionComponent = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/explorer" element={<ExplorePage />} />
         <Route path="/category/:id" element={<CategoryDetailsPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
